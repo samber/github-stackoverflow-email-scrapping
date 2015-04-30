@@ -2,11 +2,11 @@
 Github and Stack-Overflow email scrapping
 =========================================
 
-* Warning
+# Warning
 
 It's my first Go program, so please be clement ;-)
 
-* HOW-TO
+# HOW-TO
 
 - Open src/app.go
 - Choose what to scrape :
@@ -18,8 +18,16 @@ It's my first Go program, so please be clement ;-)
 	scrape_orga_members()         // MUST call scrape_repos_owners() before !
 ```
 
-* @TODO
+# @TODO
 
-- Develop the stack-overflow equivalent
+## Github:
+
 - Remove redundant writes in db
 - Store in the db the origin of the scrapping (repo owner ? commiter ? organization member ?) and associate this information to the repo/organization ID
+- Search repos with maximum stars and forks number to push the 100 pages limit
+- Scrape only top contributors of a repo
+
+## Others:
+
+- Develop the stack-overflow equivalent
+
