@@ -10,6 +10,6 @@
 	"repo_min_forks": 500,
 	"repo_min_stars": 1000,
 	"min_time_between_requests": 5,
-	"max_time_between_requests" : 20
+	"max_time_between_requests" : 35
     }
 }
