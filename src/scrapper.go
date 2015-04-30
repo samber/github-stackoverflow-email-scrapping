@@ -29,6 +29,7 @@ func init() {
 ****************************/
 func scrape_repos() {
 	// let's scrape most starred repos
+	fmt.Println("Search repos by stars")
 	for i := 0; true; i++ {
 		min_stars, _ := get_searchPage_repo("stars", i)
 		// bug -> retry
@@ -43,6 +44,7 @@ func scrape_repos() {
 	}
 
 	// let's scrape most starred repos
+	fmt.Println("Search repos by forks")
 	for i := 0; true; i++ {
 		_, min_forks := get_searchPage_repo("forks", i)
 		// bug -> retry
@@ -51,7 +53,6 @@ func scrape_repos() {
 			continue;
 		}
 		if min_forks < config.Github_scrapping.Repo_min_forks {
-			fmt.Println("Search repos by forks - Page: " + strconv.Itoa(i) + " - Min fork: " + strconv.Itoa(min_forks))
 			break
 		}
 	}
@@ -147,6 +148,8 @@ func scrape_repos_owner() {
 	var repos []GRepo
 	pg_findAll(&repos, "")
 
+	fmt.Println("Search repos owners (user/org)")
+
 	// for each repo in the db, we get the owner
 	for i := 0; i < len(repos); i++ {
 		scrape_repo_owner(repos[i].Owner)
@@ -184,7 +187,7 @@ func scrape_repo_owner_parse_user(owner string, doc *goquery.Document) {
 	fullname := doc.Find(".vcard-names .vcard-fullname").Text()
 	email := doc.Find(".vcard-detail .email").Text()
 	link := doc.Find(".vcard-detail .url").Text()
-	starred, _ := strconv.Atoi(doc.Find(".vcard-stat-count").Get(1).Data)
+	starred, _ := strconv.Atoi(doc.Find(".vcard-stat-count").Eq(1).Text())
 	persist_scrapped_user(username, fullname, email, link, starred)
 }
 
@@ -199,6 +202,8 @@ func scrape_repo_owner_parse_user(owner string, doc *goquery.Document) {
 func scrape_repos_contributors() {
 	var repos []GRepo
 	pg_findAll(&repos, "")
+
+	fmt.Println("Search repos contributors")
 
 	for i := 0; i < len(repos); i++ {
 		// get contributor list
@@ -231,11 +236,13 @@ func scrape_orga_members() {
 	var orgs []GOrga
 	pg_findAll(&orgs, "")
 
+	fmt.Println("Search organization members (only orgs that own top repos)")
+
 	// each org in the db
 	for i := 0; i < len(orgs); i++ {
 		// each page of the member list
 		for page := 1; true; page++ {
-			doc := get_html_page("https://github.com/orgs" + orgs[i].Name + "/people?page=" + strconv.Itoa(page))
+			doc := get_html_page("https://github.com/orgs/" + orgs[i].Name + "/people?page=" + strconv.Itoa(page))
 
 			// parse team member list
 			doc.Find(".member-listing .member-list-item").Each(func (i int, member *goquery.Selection) {

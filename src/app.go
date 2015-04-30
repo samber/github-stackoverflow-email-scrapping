@@ -16,8 +16,8 @@ func main() {
 	//pg_create_tables()
 
 	scrape_repos()			// use github search pages (ordering by stars and forks number)
-	//scrape_repos_contributors()	// MUST call scrape_repos() before !
-	//scrape_repos_owner()		// MUST call scrape_repos() before !
-	//scrape_orga_members()		// MUST call scrape_repos_owners() before !
+	scrape_repos_contributors()	// MUST call scrape_repos() before !
+	scrape_repos_owner()		// MUST call scrape_repos() before !
+	scrape_orga_members()		// MUST call scrape_repos_owners() before !
 }
 
