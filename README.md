@@ -26,6 +26,7 @@ It's my first Go program, so please be clement ;-)
 
 ### Github:
 
+- Check all errors and nil pointers
 - Remove redundant writes in db
 - Store in the db the origin of the scrapping (repo owner ? commiter ? organization member ?) and associate this information to the repo/organization ID
 - Search repos with maximum stars and forks number to push the 100 pages limit
