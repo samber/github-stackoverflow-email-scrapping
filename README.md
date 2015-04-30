@@ -18,6 +18,10 @@ It's my first Go program, so please be clement ;-)
 	scrape_orga_members()         // MUST call scrape_repos_owners() before !
 ```
 
+- make vendor_get
+- make build
+- make run
+
 ## TODO-List
 
 ### Github:
