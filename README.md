@@ -32,6 +32,7 @@ It's my first Go program, so please be clement ;-)
 - Store in the db the origin of the scrapping (repo owner ? commiter ? organization member ?) and associate this information to the repo/organization ID
 - Search repos with maximum stars and forks number to push the 100 pages limit
 - Scrape only top contributors of a repo
+- Build a "point" algo to detect top contributors. Example : 5 commit in a 10.000 stars and 1.000 commits repo = 0.05 * 1,000 * 10,000
 
 ### Others:
 
