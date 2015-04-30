@@ -8,9 +8,9 @@ It's my first Go program, so please be clement ;-)
 
 ## HOW-TO
 
-- Set your configuration in config.js (db + scrapping constants)
+- Set your configuration in config.js (Postgresql DB + scrapping constants)
 - Open src/app.go
-- Choose what to scrape :
+- Comment/uncomment what to scrape :
 
 ```
 	scrape_repos()                // use github search pages (ordering by stars and forks number)
@@ -19,9 +19,13 @@ It's my first Go program, so please be clement ;-)
 	scrape_orga_members()         // MUST call scrape_repos_owners() before !
 ```
 
-- make vendor_get
-- make build
-- make run
+- Then, compile and execute :
+
+```
+make vendor_get
+make build
+make run
+```
 
 ## TODO-List
 
