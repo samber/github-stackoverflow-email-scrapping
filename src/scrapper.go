@@ -31,6 +31,11 @@ func scrape_repos() {
 	// let's scrape most starred repos
 	for i := 0; true; i++ {
 		min_stars, _ := get_searchPage_repo("stars", i)
+		// bug -> retry
+		if min_stars == -1 {
+			i--
+			continue;
+		}
 		if min_stars < config.Github_scrapping.Repo_min_stars {
 			fmt.Println("Search repos by stars - Page: " + strconv.Itoa(i) + " - Min star: " + strconv.Itoa(min_stars))
 			break
@@ -40,6 +45,11 @@ func scrape_repos() {
 	// let's scrape most starred repos
 	for i := 0; true; i++ {
 		_, min_forks := get_searchPage_repo("forks", i)
+		// bug -> retry
+		if min_forks == -1 {
+			i--
+			continue;
+		}
 		if min_forks < config.Github_scrapping.Repo_min_forks {
 			fmt.Println("Search repos by forks - Page: " + strconv.Itoa(i) + " - Min fork: " + strconv.Itoa(min_forks))
 			break
@@ -64,13 +74,23 @@ func get_searchPage_repo(orderBy string, page int) (int, int) {
 	// get the page
 	url := "https://github.com/search?o=desc&q=stars%3A%3E1&s=" + orderBy + "&type=Repositories&p=" + strconv.Itoa(page)
 	doc := get_html_page(url)
+	if doc == nil {
+		fmt.Println("Failed to parse page " + strconv.Itoa(page))
+		return -1, -1
+	}
 
 	// need to return min value to stop scrapping
 	var min_stars = 0
 	var min_forks = 0
 
 	// html parsing
-	doc.Find(".repo-list-item").Each(func (i int, repo *goquery.Selection) {
+	repo_list := doc.Find(".repo-list-item")
+	if repo_list == nil {
+		fmt.Println("Failed to parse page " + strconv.Itoa(page))
+		return -1, -1
+	}
+
+	repo_list.Each(func (i int, repo *goquery.Selection) {
 		var nbr_stars = 0
 		var nbr_forks = 0
 		var repo_path = ""
