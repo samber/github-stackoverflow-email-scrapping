@@ -8,6 +8,7 @@ It's my first Go program, so please be clement ;-)
 
 ## HOW-TO
 
+- Set your configuration in config.js (db + scrapping constants)
 - Open src/app.go
 - Choose what to scrape :
 
