@@ -2,7 +2,7 @@
 Github and Stack-Overflow email scrapping
 =========================================
 
-## Warning
+## WARNING
 
 It's my first Go program, so please be clement ;-)
 
